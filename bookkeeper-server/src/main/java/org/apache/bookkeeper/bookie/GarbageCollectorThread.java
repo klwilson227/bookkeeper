@@ -212,10 +212,10 @@ public class GarbageCollectorThread extends SafeRunnable {
         }
 
         if (isForceAllowCompaction) {
-            if (minorCompactionThreshold > 0 || minorCompactionThreshold < 1.0f) {
+            if (minorCompactionThreshold > 0 && minorCompactionThreshold < 1.0f) {
                 isForceMinorCompactionAllow = true;
             }
-            if (majorCompactionThreshold > 0 || majorCompactionThreshold < 1.0f) {
+            if (majorCompactionThreshold > 0 && majorCompactionThreshold < 1.0f) {
                 isForceMajorCompactionAllow = true;
             }
         }
