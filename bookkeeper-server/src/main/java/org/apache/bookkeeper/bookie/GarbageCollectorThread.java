@@ -361,8 +361,9 @@ public class GarbageCollectorThread extends SafeRunnable {
         }
 
         long curTime = System.currentTimeMillis();
-        if ((isForceMajorCompactionAllow || enableMajorCompaction) && (!suspendMajor)
-            && (force || curTime - lastMajorCompactionTime > majorCompactionInterval)) {
+        if (((isForceMajorCompactionAllow && force)
+                || (enableMajorCompaction && curTime - lastMajorCompactionTime > majorCompactionInterval))
+                && (!suspendMajor)) {
             // enter major compaction
             LOG.info("Enter major compaction, suspendMajor {}", suspendMajor);
             majorCompacting.set(true);
@@ -372,8 +373,9 @@ public class GarbageCollectorThread extends SafeRunnable {
             lastMinorCompactionTime = lastMajorCompactionTime;
             gcStats.getMajorCompactionCounter().inc();
             majorCompacting.set(false);
-        } else if ((isForceMinorCompactionAllow || enableMinorCompaction) && (!suspendMinor)
-            && (force || curTime - lastMinorCompactionTime > minorCompactionInterval)) {
+        } else if (((isForceMinorCompactionAllow && force)
+                || (enableMinorCompaction && curTime - lastMinorCompactionTime > minorCompactionInterval))
+                && (!suspendMinor)) {
             // enter minor compaction
             LOG.info("Enter minor compaction, suspendMinor {}", suspendMinor);
             minorCompacting.set(true);
