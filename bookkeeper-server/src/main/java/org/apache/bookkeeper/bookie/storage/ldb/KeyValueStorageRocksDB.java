@@ -75,6 +75,7 @@ public class KeyValueStorageRocksDB implements KeyValueStorage {
     private static final String ROCKSDB_WRITE_BUFFER_SIZE_MB = "dbStorage_rocksDB_writeBufferSizeMB";
     private static final String ROCKSDB_SST_SIZE_MB = "dbStorage_rocksDB_sstSizeInMB";
     private static final String ROCKSDB_BLOCK_SIZE = "dbStorage_rocksDB_blockSize";
+    private static final String ROCKSDB_LOG_DIR = "dbStorage_rocksDB_logDir";
     private static final String ROCKSDB_BLOOM_FILTERS_BITS_PER_KEY = "dbStorage_rocksDB_bloomFilterBitsPerKey";
     private static final String ROCKSDB_BLOCK_CACHE_SIZE = "dbStorage_rocksDB_blockCacheSize";
     private static final String ROCKSDB_NUM_LEVELS = "dbStorage_rocksDB_numLevels";
@@ -174,6 +175,7 @@ public class KeyValueStorageRocksDB implements KeyValueStorage {
             // Keep log files for 1month
             options.setKeepLogFileNum(30);
             options.setLogFileTimeToRoll(TimeUnit.DAYS.toSeconds(1));
+            options.setDbLogDir(conf.getString(ROCKSDB_LOG_DIR, path));
 
             try {
                 if (readOnly) {
